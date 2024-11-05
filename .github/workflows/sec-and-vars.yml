@@ -6,6 +6,8 @@ jobs:
   build:
     environment: test
     runs-on: ubuntu-latest
+    env:
+      ENV_SECRET: ${{ secrets.MY_ENV_SECRET }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4.2.2
@@ -17,10 +19,10 @@ jobs:
         run: |
           echo ${{ secrets.MY_REPO_SECRET }}
           echo 'repo_secret'
-        
 
       - name: Show env variable
         run: echo ${{ vars.MY_ENV_VAR }}
 
       - name: Show env secret
+        if: ${{ env.ENV_SECRET == 'env_secret' }}
         run: echo ${{ secrets.MY_ENV_SECRET }}
